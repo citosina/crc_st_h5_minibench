@@ -1,0 +1,6 @@
+answers:
+  q1: null          # integer
+  q2: null          # integer
+  q3: null          # integer
+  q4: []            # list of 5 gene symbols
+  q5: null          # string from {CMS1_like, CMS2_like, CMS3_like, CMS4_like}

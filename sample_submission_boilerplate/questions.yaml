@@ -1,0 +1,31 @@
+task: >
+  You are given a 10x Genomics Visium filtered count matrix (HDF5).
+  Reproduce a minimal CRC Visium analysis and answer the following,
+  using only this H5 as input.
+
+questions:
+  - id: q1
+    stage: h5_validation
+    text: "How many features (genes) are recorded in the H5 matrix?"
+    answer_type: integer_exact
+
+  - id: q2
+    stage: gene_summary
+    text: "How many genes have nonzero counts in at least one spot?"
+    answer_type: integer_exact
+
+  - id: q3
+    stage: spot_metrics
+    text: "What is the median number of detected genes per spot?"
+    answer_type: integer_exact
+
+  - id: q4
+    stage: expression_ranking
+    text: "Provide the top 5 genes ranked by total counts across all spots (highest→lowest)."
+    answer_type: ordered_list
+
+  - id: q5
+    stage: marker_enrichment
+    text: "Which CMS-associated epithelial marker set is enriched in the top-expressed spot cluster (one of {CMS1_like, CMS2_like, CMS3_like, CMS4_like})?"
+    answer_type: string_exact
+

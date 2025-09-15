@@ -1,0 +1,7 @@
+title: "CRC Spatial Transcriptomics (H5-only) Mini-benchmark"
+version: "1.0.0"
+description: >
+  Workflow-only benchmark that begins from a processed Visium H5
+  (outs/filtered_feature_bc_matrix.h5). Generates simple spot metrics,
+  top-genes ranking, and CMS-like marker enrichment, then compiles
+  them into results/results.json for grading.
