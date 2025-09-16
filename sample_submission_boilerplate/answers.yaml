@@ -1,6 +1,26 @@
 answers:
-  q1: null          # integer
-  q2: null          # integer
-  q3: null          # integer
-  q4: []            # list of 5 gene symbols
-  q5: null          # string from {CMS1_like, CMS2_like, CMS3_like, CMS4_like}
+  - id: q1
+    value: 36601
+    tolerance: 0.05        # ±5% relative tolerance
+
+  - id: q2
+    value: 18651
+    tolerance: 0.02        # ±2% relative tolerance
+
+  - id: q3
+    value: 3958
+    tolerance: 0.01        # ±1% relative tolerance
+
+  - id: q4
+    value:
+      - MT-CO2
+      - MT-CO3
+      - RPL13
+      - RPS21
+      - MT-ATP6
+    tolerance: exact       # ordered list must match exactly
+
+  - id: q5
+    value: CMS4_like
+    tolerance: exact       # exact string
+
