@@ -1,28 +1,36 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT="$(cd "$(dirname "$0")/.."; pwd)"
+# Always work from the boilerplate root
+cd "$(dirname "$0")/.."
+ROOT="$(pwd)"
 H5="${ROOT}/results/filtered_feature_bc_matrix.h5"
 
-mkdir -p "${ROOT}/results/metrics"
+# Make sure the H5 is linked under results/
+if [ ! -e "$H5" ]; then
+  echo "[info] results H5 missing; running 00_verify_h5.sh to create it…"
+  bash "$ROOT/workflow/00_verify_h5.sh"
+fi
 
+if [ ! -e "$H5" ]; then
+  echo "[error] still missing: $H5"
+  exit 1
+fi
+
+mkdir -p "$ROOT/results/qc"
+
+# Write features_total.txt (number of genes/features in the matrix)
+export ROOT
 python - <<'PY'
-import scanpy as sc, numpy as np, pandas as pd, sys, pathlib
-root = pathlib.Path(__file__).resolve().parents[1]
-h5 = root / "results" / "filtered_feature_bc_matrix.h5"
-assert h5.exists(), f"Missing {h5}"
-
+import os, pathlib, scanpy as sc
+root = pathlib.Path(os.environ["ROOT"])
+h5   = root / "results" / "filtered_feature_bc_matrix.h5"
+qc   = root / "results" / "qc"
 adata = sc.read_10x_h5(str(h5))
 adata.var_names_make_unique()
-
-X = adata.X.tocsr() if hasattr(adata.X, "tocsr") else adata.X
-genes_nonzero = int((np.asarray(X.sum(axis=0)).ravel() > 0).sum())  # any expression across spots
-features_total = int(adata.n_vars)
-
-df = pd.DataFrame([
-    {"metric": "features_total", "value": features_total},
-    {"metric": "genes_nonzero",  "value": genes_nonzero},
-])
-(df).to_csv(root / "results" / "metrics" / "gene_summary.tsv", sep="\t", index=False)
-print("[ok] wrote results/metrics/gene_summary.tsv")
+n_features = int(adata.n_vars)
+(qc / "features_total.txt").write_text(str(n_features) + "\n")
+print(f"[ok] wrote {qc/'features_total.txt'} = {n_features}")
 PY
+
+echo "[done] gene summary"

@@ -1,26 +1,18 @@
 answers:
   - id: q1
     value: 36601
-    tolerance: 0.05        # ±5% relative tolerance
+    tolerance: 0        # exact
 
   - id: q2
-    value: 18651
-    tolerance: 0.02        # ±2% relative tolerance
+    value: 50
+    tolerance: 0        # exact
 
   - id: q3
-    value: 3958
-    tolerance: 0.01        # ±1% relative tolerance
+    value: 3
+    tolerance: 0        # exact
 
   - id: q4
-    value:
-      - MT-CO2
-      - MT-CO3
-      - RPL13
-      - RPS21
-      - MT-ATP6
-    tolerance: exact       # ordered list must match exactly
+    value: ["PYGB", "RPS6", "RPS21"]   # ordered list (exact match)
 
   - id: q5
-    value: CMS4_like
-    tolerance: exact       # exact string
-
+    value: "CMS2_like"                 # exact match

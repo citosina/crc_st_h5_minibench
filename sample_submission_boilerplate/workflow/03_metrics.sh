@@ -1,5 +1,16 @@
+
+
+
+
+
+
+
+
 #!/usr/bin/env bash
 set -euo pipefail
+
+# Force HVG flavor to Seurat (avoids scikit-misc requirement on macOS ARM)
+export CRCST_HVG_FLAVOR=seurat
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
